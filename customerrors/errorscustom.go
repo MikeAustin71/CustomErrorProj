@@ -106,10 +106,12 @@ func (e *FuncReturnError) Unwrap() error {
 //
 // Example Usage:
 //
-//	&InputPtrNilError{
-//		ErrPrefix:  ePrefix.String(),
-//		ErrContext: "",
-//		ParameterName: "'bNum'",
+//	if aNumPrecision == nil {
+//		return agMean, agMeanPrecision, gValue, gValuePrecision, cycles,
+//		&InputPtrNilError{
+//		ErrPrefix:     ePrefix.String(),
+//		ParameterName: "'aNumPrecision'", // ParameterName is the name of the nil input parameter pointer
+//		}
 //	}
 type InputPtrNilError struct {
 	ErrPrefix     string
