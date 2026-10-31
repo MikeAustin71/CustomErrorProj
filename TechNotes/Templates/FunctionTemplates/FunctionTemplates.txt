@@ -1,0 +1,178 @@
+
+-------------------------------------------------------------------
+Main Error Prefix
+-------------------------------------------------------------------
+
+	var ePrefix *ePref.ErrPrefixDto
+	var err error
+
+	ePrefix,
+		err = ePref.ErrPrefixDto{}.NewIEmpty(
+		nil,
+		"NumStrDto.CopyIn",
+		"")
+
+	if err != nil {
+		return BigIntNum{}, err
+	}
+
+-------------------------------------------------------------------
+ Low-Level Method Signature
+-------------------------------------------------------------------
+func (bigFloatPwr *bigFloatRaiseToPower) raiseToPowerMul(
+  base *big.Float,
+  power int64,
+  mode big.RoundingMode,
+  errPrefDto *ePref.ErrPrefixDto) (*big.Float, error) {
+
+    ...
+}
+
+-------------------------------------------------------------------
+ Low-Level Lock Code
+-------------------------------------------------------------------
+
+	if bNumNeutron.lock == nil {
+		bNumNeutron.lock = new(sync.Mutex)
+	}
+
+	bNumNeutron.lock.Lock()
+
+	defer bNumNeutron.lock.Unlock()
+
+-------------------------------------------------------------------
+Low-Level Error Prefix
+-------------------------------------------------------------------
+
+
+	var ePrefix *ePref.ErrPrefixDto
+
+	var err error
+
+	ePrefix,
+		err = ePref.ErrPrefixDto{}.NewFromErrPrefDto(
+		errPrefDto,
+		"bigIntNumBoson.roundToDecimalPlace",
+		"")
+
+	if err != nil {
+		return err
+	}
+
+
+
+
+ *******************************************************
+  'errPrefDto' Source Code
+ *******************************************************
+
+//
+//	errPrefDto					*ePref.ErrPrefixDto
+//
+//	  This object encapsulates an error prefix string
+//	  which is included in all returned error
+//	  messages. Usually, it contains the name of the
+//	  calling method or methods listed as a function
+//	  chain.
+//
+//	  If no error prefix information is needed, set
+//	  this parameter to 'nil'.
+//
+//	  Type ErrPrefixDto is included in the 'errpref'
+//	  software package:
+//	    "github.com/MikeAustin71/errpref".
+//
+
+
+===================================================================
+ Low-Level Code Comments
+===================================================================
+
+// GetAbsPureNumStr
+//
+//	Returns all digits in the current NumStrDto numeric value as a
+//	pure, unsigned number string. If fractional digits exists, they
+//	are included in the string and NOT separated by a decimal
+//	separator.
+//
+//	All the numeric digits in the numeric value are therefore
+//	returned as a type string.
+//
+//	Examples
+//	========
+//
+//	Numeric
+//	Value       pureNumStr    precision    numberSign
+//	------      ----------    ---------    ----------
+//
+//	 123.45      12345            2             1
+//	 12345       12345            0             1
+//	-123.45      11245            2            -1
+//
+//	IMPORTANT
+//	=========
+//
+//	If the current NumStrDto instance is invalid, an error will be
+//	returned.
+//
+//	Input Parameters
+//	================
+//
+//	nDto                     *NumStrDto
+//	  The returned number string will be extracted from the numeric
+//	  value contained in this instance of NumStrDto
+//
+//	validateNumStrDto        bool
+//	  When set to 'true', the NumStrDto parameter 'nDto' will be
+//	  subjected to validation tests.
+//
+//	errPrefDto					*ePref.ErrPrefixDto
+//
+//	  This object encapsulates an error prefix string
+//	  which is included in all returned error
+//	  messages. Usually, it contains the name of the
+//	  calling method or methods listed as a function
+//	  chain.
+//
+//	  If no error prefix information is needed, set
+//	  this parameter to 'nil'.
+//
+//	  Type ErrPrefixDto is included in the 'errpref'
+//	  software package:
+//	    "github.com/MikeAustin71/errpref".
+//
+//	Return Values
+//	=============
+//
+//	pureNumStr               string
+//	  This returned string value contains the pure number string
+//	  representaion of the absolue numeric value for the current
+//	  NumStrDto instance.
+//
+//	precision                 uint
+//	  An unsigned integer value representing the number of
+//	  fractional digits to the right of the decimal point in the
+//	  numeric value returned by 'pureNumStr'.
+//
+//	numberSign                int
+//	  The returned number sign will designate the 'purNumStr' as
+//	  either a positive value or a negative value.
+//
+//	  Possible return values:
+//	    +1 = Positive numeric value (including zero)
+//	                OR
+//	    -1 = Negative numeric value
+//
+//	error
+//	  If a processing error is encountered, this error object will
+//	  be returned formatted with an appropriate error message.
+
+
+************************************************
+    Counting Decimal Places
+************************************************
+
+           1         2         3         4         5
+0.1234567890123456789012345678901234567890123456789012345678901234567890
+1.0946235364347187301608050894219178703121159477156
+
