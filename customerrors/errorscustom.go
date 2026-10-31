@@ -21,33 +21,38 @@ type FuncReturnError struct {
 //
 // EXAMPLE #1:
 //
-//	if err != nil {
+//	 dec, err := new(Decimal).NewBigInt(big.NewInt(0).Set(bNum.bigInt), bNum.precision)
 //
-//		return Decimal{},
+//		if err != nil {
+//
+//			return Decimal{},
+//				&FuncReturnError{
+//					ErrPrefix:  ePrefix.String(),
+//					ReturnFunc: "dec, err := new(Decimal).NewBigInt(\n" +
+//					"  big.NewInt(0).Set(bNum.bigInt), bNum.precision)\n",
+//					ErrContext: "",
+//					ErrMessage:   err.Error(),
+//				}
+//		}
+//
+//		EXAMPLE #2:
+//
+//	 "dec, err := new(Decimal).NewBigInt(big.NewInt(0).Set(bNum.bigInt), bNum.precision)
+//
+//		if err != nil {
+//
+//			return Decimal{},
 //			&FuncReturnError{
-//				ErrPrefix:  ePrefix.String(),
+//				ErrPrefix: ePrefix.String(),
 //				ReturnFunc: "dec, err := new(Decimal).NewBigInt(\n" +
-//				"  big.NewInt(0).Set(bNum.bigInt), bNum.precision)\n",
+//				"    big.NewInt(0).Set(bNum.bigInt), bNum.precision)",
 //				ErrContext: "",
-//				ErrMessage:   err.Error(),
+//				ErrMessage: err.Error(),
 //			}
-//	}
+//		}
 //
-//
-//	EXAMPLE #2:
-//
-//	return Decimal{},
-//	&FuncReturnError{
-//		ErrPrefix: ePrefix.String(),
-//		ReturnFunc: "dec, err := new(Decimal).NewBigInt(\n" +
-//		"    big.NewInt(0).Set(bNum.bigInt), bNum.precision)",
-//		ErrContext: "",
-//		ErrMessage: err.Error(),
-//	}
-//
-//	NOTE:
-//
-//	Element 'ErrContext' is optional
+//		NOTE:
+//		Element 'ErrContext' is optional
 func (e *FuncReturnError) Error() string {
 
 	var errStr string
