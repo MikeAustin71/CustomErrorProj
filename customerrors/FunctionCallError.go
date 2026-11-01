@@ -1,6 +1,9 @@
 package customerrors
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 // FunctionCallError
 //
@@ -64,6 +67,10 @@ func (e *FunctionCallError) NewFunctionCallError(
 		errorMessage:      errorMessage,
 		wrappedErr:        calledFunctionWrappedErr,
 	}
+
+	// Eagerly compute the string error block and wrap it.
+	// This makes Error() and Unwrap() completely read-only and thread-safe.
+	err.wrappedErr = errors.New(err.buildErrorString())
 
 	return err, nil
 }
