@@ -68,6 +68,7 @@ func ProcessUser(db *Database, userID string) error {
 		if initErr != nil {
 			return initErr // Handles constructor configuration failure
 		}
+
 		return err
 	}
 

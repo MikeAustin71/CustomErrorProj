@@ -4,5 +4,7 @@ import "fmt"
 
 func main() {
 
-	fmt.Println("Hello From Custom Error Project!")
+	fmt.Printf("Running TestFunc_01()...\n\n")
+
+	Testfunc01()
 }
