@@ -399,7 +399,7 @@ func ProcessUser(db *Database, userID string) error {
 			"ProcessUser",
 			"db",
 			"Fetching active user record",
-			"", // Leaving blank to leverage your default fallback message
+			"", // Leaving 'errorMessage' blank to leverage your default fallback message
 		)
 		if initErr != nil {
 			return initErr // Handles constructor configuration failure

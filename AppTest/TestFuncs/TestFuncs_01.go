@@ -1,4 +1,4 @@
-package main
+package TestFuncs
 
 import (
 	"fmt"
@@ -6,7 +6,9 @@ import (
 	"github.com/MikeAustin71/CustomErrorProj/customerrors"
 )
 
-func Testfunc01() {
+type TestFunctions struct{}
+
+func (tf *TestFunctions) Testfunc01() {
 
 	err := Series01Func01()
 
