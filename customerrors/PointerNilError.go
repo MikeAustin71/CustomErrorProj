@@ -30,7 +30,7 @@ package main
 
 import (
 	"fmt"
-	"yourproject/errors" // Assuming your custom error package name
+	"yourproject/customerrors" // Assuming your custom error package name
 )
 
 type Database struct{}
