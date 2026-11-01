@@ -8,7 +8,7 @@ import (
 
 type TestFunctions struct{}
 
-func (tf *TestFunctions) Testfunc01() {
+func (tf *TestFunctions) TestFunc01() {
 
 	err := Series01Func01()
 

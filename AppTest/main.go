@@ -11,5 +11,5 @@ func main() {
 	fmt.Printf("Running TestFunc_01()...\n\n")
 	tf := new(TestFuncs.TestFunctions)
 
-	tf.Testfunc01()
+	tf.TestFunc01()
 }
