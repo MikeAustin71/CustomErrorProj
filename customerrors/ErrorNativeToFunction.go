@@ -1,1 +1,104 @@
 package customerrors
+
+import (
+	"errors"
+	"fmt"
+)
+
+// ErrorNativeToFunction
+//
+// Represents an error type with detailed context about a function's internal
+// operational failure.
+//
+// This custom error type is designed to be used by functions or methods which
+// encounter operational failures internally, during processing. These types of
+// errors do NOT result from errors returned when calling other functions.
+//
+// Function operational errors occur from code failures inherent to the current
+// function or method. Examples include, invalid input parameter values, internal
+// calculation errors and value out of bounds errors.
+type ErrorNativeToFunction struct {
+	SourceFile   string
+	ParentType   string // The 'type' in which this method resides
+	ThisFunction string
+	ErrorContext string
+	ErrorMessage string
+}
+
+func (e *ErrorNativeToFunction) Error() string {
+
+	errStr := e.buildErrorStr()
+
+	return errStr
+}
+
+func (e *ErrorNativeToFunction) Unwrap() error {
+
+	err := errors.New(e.buildErrorStr())
+
+	return fmt.Errorf("%w", err)
+
+}
+
+func (e *ErrorNativeToFunction) buildErrorStr() string {
+
+	errStr := ""
+
+	foundParametersCount := 0
+
+	if e.SourceFile != "" {
+		errStr = "\n"
+		errStr += fmt.Sprintf("SourceFile: %s\n", e.SourceFile)
+		foundParametersCount++
+	}
+
+	if e.ParentType != "" {
+
+		if foundParametersCount == 0 {
+			errStr = "\n"
+		}
+
+		errStr += fmt.Sprintf("ParentType: %s\n", e.ParentType)
+
+		foundParametersCount++
+	}
+
+	if e.ThisFunction != "" {
+
+		if foundParametersCount == 0 {
+			errStr = "\n"
+		}
+
+		errStr += fmt.Sprintf("ThisFunction: %s\n", e.ThisFunction)
+
+		foundParametersCount++
+	}
+
+	if e.ErrorContext != "" {
+
+		if foundParametersCount == 0 {
+			errStr = "\n"
+		}
+
+		errStr += fmt.Sprintf("ErrorContext: %s\n", e.ErrorContext)
+
+		foundParametersCount++
+	}
+
+	if e.ErrorMessage != "" {
+
+		if foundParametersCount == 0 {
+			errStr = "\n"
+		}
+
+		errStr += fmt.Sprintf("ErrorMessage: %s\n", e.ErrorMessage)
+
+		foundParametersCount++
+	}
+
+	if foundParametersCount == 0 {
+		errStr += "\nNo parameters found for this ErrorFunctionCall instance\n"
+	}
+
+	return errStr
+}
