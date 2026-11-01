@@ -30,15 +30,17 @@ package main
 
 import (
 	"fmt"
-	"yourproject/customerrors" // Assuming your custom error package name
+	"yourproject/customerrors/PointerNilError" // Assuming your custom error package name
 )
 
 type Database struct{}
 
 func ProcessUser(db *Database, userID string) error {
-	if db == nil {
+
+
+  if db == nil {
 		// Use the constructor pattern safely
-		err, initErr := errors.NewPointerNilError(
+		err, initErr := new(PointerNilError).NewPointerNilError(
 			"main() -> ProcessUser()",
 			"user_service.go",
 			"Database",
@@ -47,6 +49,7 @@ func ProcessUser(db *Database, userID string) error {
 			"Fetching active user record",
 			"", // Leaving 'errorMessage' blank to leverage the default fallback message
 		)
+
 		if initErr != nil {
 			return initErr // Handles constructor configuration failure
 		}
@@ -93,14 +96,19 @@ func NewPointerNilError(
 	}
 
 	// Eagerly compute the string error block and wrap it.
-	// This makes Error() and Unwrap() completely read-only and thread-safe.
+	// This makes Error() and Unwrap() completely read-only
+	// and thread-safe.
 	err.wrappedErr = errors.New(err.buildErrorString())
 
 	return err, nil
 }
 
-// buildErrorString acts as an internal helper to format the output block
+// buildErrorString
+//
+// This method acts as an internal helper to format the
+// output block
 func (e *PointerNilError) buildErrorString() string {
+
 	errString := "\n"
 
 	if e.functionCallChain != "" {
@@ -112,6 +120,7 @@ func (e *PointerNilError) buildErrorString() string {
 	if e.parentType != "" {
 		errString += fmt.Sprintf("Parent Type: %s\n", e.parentType)
 	}
+
 	if e.thisFunction != "" {
 		errString += fmt.Sprintf("Calling Function: %s\n", e.thisFunction)
 	}
@@ -121,6 +130,7 @@ func (e *PointerNilError) buildErrorString() string {
 	if e.errContext != "" {
 		errString += fmt.Sprintf("Error Context: %s\n", e.errContext)
 	}
+
 	if e.message != "" {
 		errString += fmt.Sprintf("%s\n", e.message)
 	}
@@ -131,9 +141,11 @@ func (e *PointerNilError) buildErrorString() string {
 // Error satisfies Go's built-in error interface.
 // Because e.wrappedErr was initialized eagerly, this is completely thread-safe.
 func (e *PointerNilError) Error() string {
+
 	if e.wrappedErr == nil {
 		return ""
 	}
+
 	return e.wrappedErr.Error()
 }
 

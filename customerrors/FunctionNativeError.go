@@ -17,48 +17,130 @@ import (
 // Function operational errors occur from code failures inherent to the current
 // function or method.
 //
-// The returned WrappedErr refers to the current function or method only. Said
+// The returned wrappedErr refers to the current function or method only. Said
 // error is assumed to result from processing errors native to the current
 // function or method.
 //
-// FunctionCallChain provides a chain of functions where the error occurred.
-// SourceFile specifies the source file where the error originated.
-// ParentType indicates the type of the parent that invoked the function.
-// ThisFunction specifies the name of the function that encountered the error.
-// ErrContext gives contextual details relevant to the error.
-// ErrMessage describes the error in a human-readable format. This is REQUIRED!
-// WrappedErr contains the underlying wrapped error, if any.
+// functionCallChain provides a chain of functions where the error occurred.
+// sourceFile specifies the source file where the error originated.
+// parentType indicates the type of the parent that invoked the function.
+// thisFunction specifies the name of the function that encountered the error.
+// errContext gives contextual details relevant to the error.
+// errMessage describes the error in a human-readable format. This is REQUIRED!
+// wrappedErr contains the underlying wrapped error, if any.
 type FunctionNativeError struct {
-	FunctionCallChain string // ePrefix Function Call Chain
-	SourceFile        string
-	ParentType        string
-	ThisFunction      string
-	ErrContext        string
-	ErrMessage        string
-	WrappedErr        error
+	functionCallChain string // ePrefix Function Call Chain
+	sourceFile        string
+	parentType        string
+	thisFunction      string
+	errorContext      string
+	errorMessage      string
+	wrappedErr        error
 }
 
-func (e *FunctionNativeError) SetErrorParameters(
+/*
+Example Code Usage
+==================
+
+package main
+
+import (
+	"fmt"
+	"yourproject/customerrors/FunctionNativeError" // Assuming your custom error package name
+)
+
+type Database struct{}
+
+func ProcessUser(db *Database, userID string) error {
+
+
+  if userID == nil {
+		// Use the constructor pattern safely
+		err, initErr := new(FunctionNativeError).NewFunctionNativeError(
+			"main() -> ProcessUser()",
+			"user_service.go",
+			"Database",
+			"ProcessUser",
+			"db",
+			"Fetching active user record",
+			"Input parameter 'userId' is empty string")
+
+		if initErr != nil {
+			return initErr // Handles constructor configuration failure
+		}
+		return err
+	}
+
+	return nil
+}
+*/
+
+func (e *FunctionNativeError) NewFunctionNativeError(
 	functionCallChain string,
 	sourceFile string,
 	parentType string,
 	thisFunction string,
 	errorContext string,
-	errorMessage string) error {
+	errorMessage string) (*FunctionNativeError, error) {
 
 	if errorMessage == "" {
-		return fmt.Errorf("\nFunctionNativeError\n" +
+		return nil, fmt.Errorf("\nFunctionNativeError\n" +
 			"error message is required")
 	}
 
-	e.FunctionCallChain = functionCallChain
-	e.SourceFile = sourceFile
-	e.ParentType = parentType
-	e.ThisFunction = thisFunction
-	e.ErrContext = errorContext
-	e.ErrMessage = errorMessage
+	// Construct the concrete struct pointer
+	err := &FunctionNativeError{
+		functionCallChain: functionCallChain,
+		sourceFile:        sourceFile,
+		parentType:        parentType,
+		thisFunction:      thisFunction,
+		errorContext:      errorContext,
+		errorMessage:      errorMessage,
+	}
+	// Eagerly compute the string error block and wrap it.
+	// This makes Error() and Unwrap() completely read-only and thread-safe.
+	err.wrappedErr = errors.New(err.buildErrorString())
 
-	return nil
+	return err, nil
+}
+
+func (e *FunctionNativeError) buildErrorString() string {
+
+	errString := ""
+
+	if e.errorMessage != "" {
+
+		errString = "\n"
+
+		if e.functionCallChain != "" {
+			errString += fmt.Sprintf("Function Call Chain: %s\n", e.functionCallChain)
+		}
+
+		if e.sourceFile != "" {
+			errString += fmt.Sprintf("Source File: %s\n", e.sourceFile)
+		}
+
+		if e.parentType != "" {
+			errString += fmt.Sprintf("Parent Type: %s\n", e.parentType)
+		}
+
+		if e.thisFunction != "" {
+			errString += fmt.Sprintf("Calling Function: %s\n", e.thisFunction)
+		}
+
+		if e.errorContext != "" {
+			errString += fmt.Sprintf("Error Context: %s\n", e.errorContext)
+		}
+
+		if e.errorMessage != "" {
+			errString += fmt.Sprintf("%s\n", e.errorMessage)
+		}
+
+		e.wrappedErr = errors.New(errString)
+	}
+
+	return errString
+
 }
 
 // Error
@@ -66,42 +148,13 @@ func (e *FunctionNativeError) SetErrorParameters(
 // Required by error interface.
 func (e *FunctionNativeError) Error() string {
 
-	errString := ""
-
-	if e.ErrMessage != "" {
-
-		errString = "\n"
-
-		if e.FunctionCallChain != "" {
-			errString += fmt.Sprintf("Function Call Chain: %s\n", e.FunctionCallChain)
-		}
-
-		if e.SourceFile != "" {
-			errString += fmt.Sprintf("Source File: %s\n", e.SourceFile)
-		}
-
-		if e.ParentType != "" {
-			errString += fmt.Sprintf("Parent Type: %s\n", e.ParentType)
-		}
-
-		if e.ThisFunction != "" {
-			errString += fmt.Sprintf("Calling Function: %s\n", e.ThisFunction)
-		}
-
-		if e.ErrContext != "" {
-			errString += fmt.Sprintf("Error Context: %s\n", e.ErrContext)
-		}
-
-		if e.ErrMessage != "" {
-			errString += fmt.Sprintf("%s\n", e.ErrMessage)
-		}
-
-		e.WrappedErr = errors.New(errString)
+	if e.wrappedErr == nil {
+		return ""
 	}
 
-	return errString
+	return e.wrappedErr.Error()
 }
 
 func (e *FunctionNativeError) Unwrap() error {
-	return e.WrappedErr
+	return e.wrappedErr
 }
