@@ -84,7 +84,7 @@ func (e *FunctionNativeError) NewFunctionNativeError(
 	errorMessage string) (*FunctionNativeError, error) {
 
 	if errorMessage == "" {
-		return nil, fmt.Errorf("\nFunctionNativeError\n" +
+		return nil, fmt.Errorf("\nNewFunctionNativeError\n" +
 			"error message is required")
 	}
 
