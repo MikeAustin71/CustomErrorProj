@@ -1,4 +1,17 @@
-[theoriginalamarillomike](assets/sittingduck003.png)
+
+- [CustomErrorProj: Develop New Custom Error Types](#customerrorproj-develop-new-custom-error-types)
+	- [***ErrorGenericFactory***](#errorgenericfactory)
+		- [Be Advised: ***ErrorGenericFactory*** is Still Undergoing Testing](#be-advised-errorgenericfactory-is-still-undergoing-testing)
+	- [Specialized Error Types](#specialized-error-types)
+	- [Custom Error Creation and Usage](#custom-error-creation-and-usage)
+		- [1. Create an Instance of the Factory](#1-create-an-instance-of-the-factory)
+		- [2. Generate a Specialized Custom Error Instance](#2-generate-a-specialized-custom-error-instance)
+		- [3. Apply the Specialized Error Instance As Needed](#3-apply-the-specialized-error-instance-as-needed)
+	- [***ErrorGenericFactory*** Example Usage](#errorgenericfactory-example-usage)
+		- [Call Tree for Test](#call-tree-for-test)
+		- [Test Source Code](#test-source-code)
+	- [***ErrorGenericFactory*** Source Code](#errorgenericfactory-source-code)
+	- [CustomErrorProj: Operational Configuration](#customerrorproj-operational-configuration)
 
 
 
@@ -25,6 +38,35 @@ Based on testing to date, the ***ErrorGenericFactory*** custom error type has be
 
 
 Testing and evaluation of ***ErrorGenericFactory*** is still ongoing. Progress updates will follow. In the meantime, this is looking very promising. 
+
+
+
+## Specialized Error Types
+
+***ErrorGenericFactory*** incorporates the following specialized error types:
+
+1. **ErrorInputParameterOutOfRange**
+2. **ErrorInputParameterNilPointer**
+3. **ErrorNativeToFunction**
+4. **ErrorFromFunctionCall**
+
+These specialized error types will be identifiable when inspecting a series of **wrapped** errors. Reference the tests included in **`zzzt_ErrorGenericFactory_0010_test.go`** .
+
+
+
+## Custom Error Creation and Usage
+
+### 1. Create an Instance of the Factory
+
+Call the Factory Constructor - ***ErrorGenericFactory.NewErrorGenericConfig()***
+
+### 2. Select and Generate a Specialized Custom Error Instance
+
+Call one of the methods returning a specialized custom error instance. Example: ***ErrorGenericFactory. GetErrorFromFunctionCall()***
+
+### 3. Apply the Specialized Error Instance As Needed
+
+See the Example Usage below [Test Source Code](#Test Source Code)
 
 
 
