@@ -23,6 +23,7 @@ func (tf *TestSeries04Functions) TestFunc04() {
 	if err != nil {
 
 		combinedWrappedErr := errGenericCfg.GetErrorFromFunctionCall(
+			"",
 			"Series04Func01()",
 			"",
 			"",
@@ -56,6 +57,7 @@ func (tf *TestSeries04Functions) Series04Func01() error {
 	if err != nil {
 
 		return errGenericCfg.GetErrorFromFunctionCall(
+			"",
 			"Series04Func02()",
 			"",
 			"",
@@ -78,6 +80,7 @@ func (tf *TestSeries04Functions) Series04Func02() error {
 	if err != nil {
 
 		return errGenericCfg.GetErrorFromFunctionCall(
+			"",
 			"Series04Func03()",
 			"",
 			"",
@@ -100,6 +103,7 @@ func (tf *TestSeries04Functions) Series04Func03() error {
 	if err != nil {
 
 		return errGenericCfg.GetErrorFromFunctionCall(
+			"",
 			"Series04Func04()",
 			"",
 			"",

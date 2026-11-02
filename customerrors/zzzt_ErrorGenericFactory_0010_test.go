@@ -17,6 +17,7 @@ func Series04Func01() error {
 	err := Series04Func02()
 	if err != nil {
 		return factory.GetErrorFromFunctionCall(
+			"",
 			"Series04Func02",
 			"orchestrating downstream sequence",
 			"top-level operation failed",
@@ -33,6 +34,7 @@ func Series04Func02() error {
 	err := Series03Func03()
 	if err != nil {
 		return factory.GetErrorFromFunctionCall(
+			"",
 			"Series03Func03",
 			"validating intermediate system state",
 			"mid-level verification failed",
@@ -49,6 +51,7 @@ func Series03Func03() error {
 	err := Series03Func04()
 	if err != nil {
 		return factory.GetErrorFromFunctionCall(
+			"",
 			"Series03Func04",
 			"executing data processing operation",
 			"low-level repository failed",

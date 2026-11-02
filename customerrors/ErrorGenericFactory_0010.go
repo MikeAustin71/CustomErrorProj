@@ -10,16 +10,18 @@ import (
 // ============================================================================
 
 type ErrorGenericFactory struct {
-	sourceFile     string
-	parentType     string // The 'type' in which thisFunction resides
-	thisFunction   string
-	calledFunction string
-	parameter      string
-	path           string
-	fileName       string
-	url            string
-	errorContext   string
-	errorMessage   string
+	sourceFile         string // Source file containing 'thisFunction'.
+	parentType         string // The 'type' in which 'thisFunction' resides.
+	thisFunction       string // The current function processing this error.
+	calledFunctionType string // The 'type' of the method identified in
+	// 'calledFunction', below.
+	calledFunction string // The method or function called by 'thisFunction'.
+	parameter      string // Parameter associated with this error.
+	path           string // File path associated with this error.
+	fileName       string // File name associated with this error.
+	url            string // URL associated with this error.
+	errorContext   string // Error context associated with this error.
+	errorMessage   string // The error message associated with this error.
 }
 
 // ============================================================================
@@ -150,11 +152,13 @@ func (egc *ErrorGenericFactory) GetErrorNativeToFunction(
 
 // GetErrorFromFunctionCall returns an inspectable, wrapped FunctionCallError.
 func (egc *ErrorGenericFactory) GetErrorFromFunctionCall(
+	calledFunctionType string,
 	calledFunction string,
 	errorContext string,
 	errorMessage string,
 	returnedCalledFunctionError error) error {
 
+	egc.calledFunctionType = calledFunctionType
 	egc.calledFunction = calledFunction
 	egc.errorContext = errorContext
 	egc.errorMessage = errorMessage
@@ -167,7 +171,8 @@ func (egc *ErrorGenericFactory) GetErrorFromFunctionCall(
 
 // GetInnerMostError
 //
-// Returns the innermost error from a wrapped error.
+// Returns the innermost (or last) error from a series of
+// wrapped errors.
 func (egc *ErrorGenericFactory) GetInnerMostError(
 	wrappedErrors error) error {
 
@@ -254,6 +259,14 @@ func (egc *ErrorGenericFactory) buildErrorStr() string {
 			errStr = "\n"
 		}
 		errStr += fmt.Sprintf("This Function: %s\n", egc.thisFunction)
+		foundParametersCount++
+	}
+
+	if egc.calledFunctionType != "" {
+		if foundParametersCount == 0 {
+			errStr = "\n"
+		}
+		errStr += fmt.Sprintf("Called Function Type: %s\n", egc.calledFunctionType)
 		foundParametersCount++
 	}
 

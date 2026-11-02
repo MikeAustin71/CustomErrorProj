@@ -123,7 +123,7 @@ The cleanest, most idiomatic solution in Go is to populate WrappedErr immediatel
 ```go
 func(e *PointerNilError) SetErrorParameters(/* ... args ... */) error {
 if nilParameterName == "" {
-return fmt.Errorf("\nPointerNilError\nnilParameterName is required")
+return fmt.Errorf("\nPointerNilError\nilParameterName is required")
 }
 if errorMessage == "" {
 // FIX: Use nilParameterName variable, not e.NilParameterName which is empty right now

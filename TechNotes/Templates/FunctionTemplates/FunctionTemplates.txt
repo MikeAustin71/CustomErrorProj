@@ -146,7 +146,7 @@ Low-Level Error Prefix
 //
 //	pureNumStr               string
 //	  This returned string value contains the pure number string
-//	  representaion of the absolue numeric value for the current
+//	  representation of the absolute numeric value for the current
 //	  NumStrDto instance.
 //
 //	precision                 uint
