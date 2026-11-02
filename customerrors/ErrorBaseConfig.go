@@ -1,6 +1,9 @@
 package customerrors
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type ErrorBaseConfig struct {
 	sourceFile     string
@@ -57,7 +60,7 @@ func (ebc *ErrorBaseConfig) GetErrorFunctionCall(
 	}
 }
 
-func (ebc *ErrorBaseConfig) GetCombinedTwoErrors(
+func (ebc *ErrorBaseConfig) GetSimpleCombinedTwoErrors(
 	errString string,
 	err2 error) error {
 
@@ -69,4 +72,28 @@ func (ebc *ErrorBaseConfig) GetWrappedCombinedTwoErrors(
 	err2 error) error {
 
 	return fmt.Errorf("%s: %w", errString, err2)
+}
+
+func (ebc *ErrorBaseConfig) GetInnerMostError(
+	wrappedErrors error) error {
+
+	if wrappedErrors == nil {
+		return errors.New("ErrorBaseConfig.GetInnerMostError()\n" +
+			"Input parameter 'wrappedErrors' is nil")
+	}
+
+	innerMostError := wrappedErrors
+
+	for {
+
+		unwrappedErr := errors.Unwrap(innerMostError)
+
+		if unwrappedErr == nil {
+			break
+		}
+
+		innerMostError = unwrappedErr
+	}
+
+	return innerMostError
 }

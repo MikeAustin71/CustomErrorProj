@@ -31,6 +31,12 @@ func (tf *TestSeries02Functions) TestFunc02() {
 
 		fmt.Printf("%s\n", combinedErr)
 
+		innerMostErr := errBaseCfg.GetInnerMostError(combinedErr)
+
+		fmt.Println("Inner Most Error:")
+
+		fmt.Printf("%s\n", innerMostErr)
+
 		return
 	}
 
