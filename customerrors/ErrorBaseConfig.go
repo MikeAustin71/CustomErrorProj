@@ -45,12 +45,33 @@ func (ebc *ErrorBaseConfig) GetErrorNativeToFunction(
 	}
 }
 
+func (ebc *ErrorBaseConfig) GetErrorFromFunctionCall(calledFunction string,
+	errorContext string,
+	errorMessage string,
+	functionReturnErr error) error {
+
+	errFuncCall := &ErrorFunctionCall{
+		SourceFile:     ebc.sourceFile,
+		ParentType:     ebc.parentType,
+		ThisFunction:   ebc.thisFunction,
+		CalledFunction: calledFunction,
+		ErrorContext:   errorContext,
+		ErrorMessage:   errorMessage,
+	}
+
+	if functionReturnErr == nil {
+		return fmt.Errorf("%s", errFuncCall.Error())
+	}
+
+	return fmt.Errorf("%s: %w", errFuncCall.Error(), functionReturnErr)
+}
+
 func (ebc *ErrorBaseConfig) GetErrorFunctionCall(
 	calledFunction string,
 	errorContext string,
-	errorMessage string) ErrorFunctionCall {
+	errorMessage string) *ErrorFunctionCall {
 
-	return ErrorFunctionCall{
+	return &ErrorFunctionCall{
 		SourceFile:     ebc.sourceFile,
 		ParentType:     ebc.parentType,
 		ThisFunction:   ebc.thisFunction,

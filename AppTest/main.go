@@ -6,7 +6,7 @@ import (
 
 func main() {
 
-	tf := new(TestFuncs.TestSeries02Functions)
+	tf := new(TestFuncs.TestSeries03Functions)
 
-	tf.TestFunc02()
+	tf.TestFunc03()
 }
