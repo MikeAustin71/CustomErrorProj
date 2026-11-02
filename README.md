@@ -1,4 +1,4 @@
-[TheOriginalAmarilloMike](assets/sittingduck003.png)
+[theoriginalamarillomike](assets/sittingduck003.png)
 
 
 
@@ -18,7 +18,7 @@ troubleshoot issues in Go code.
 
 Based on testing to date, the ***ErrorGenericFactory*** custom error type has been found to be the most effective in providing detailed and informative error messages for various scenarios. It allows developers to create custom error messages with specific error codes and descriptions, making it easier to identify and resolve issues in their Go code.
 
-[Caution](assets/underconstruction003.png)
+[caution](assets/underconstruction003.png)
 
 ### Be Advised: ***ErrorGenericFactory*** is Still Undergoing Testing
 
