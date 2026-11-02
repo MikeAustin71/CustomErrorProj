@@ -9,7 +9,7 @@ import (
 // 1. Core Configuration Types
 // ============================================================================
 
-type ErrorGenericConfig struct {
+type ErrorGenericFactory struct {
 	sourceFile     string
 	parentType     string // The 'type' in which thisFunction resides
 	thisFunction   string
@@ -28,7 +28,7 @@ type ErrorGenericConfig struct {
 
 // ErrorInputParameterOutOfRange represents a parameter value out of bounds.
 type ErrorInputParameterOutOfRange struct {
-	ErrorGenericConfig // Value embedding ensures an isolated, safe snapshot
+	ErrorGenericFactory // Value embedding ensures an isolated, safe snapshot
 }
 
 func (e *ErrorInputParameterOutOfRange) Error() string {
@@ -37,7 +37,7 @@ func (e *ErrorInputParameterOutOfRange) Error() string {
 
 // ErrorInputParameterNilPointer represents a required pointer passing a nil value.
 type ErrorInputParameterNilPointer struct {
-	ErrorGenericConfig
+	ErrorGenericFactory
 }
 
 func (e *ErrorInputParameterNilPointer) Error() string {
@@ -46,7 +46,7 @@ func (e *ErrorInputParameterNilPointer) Error() string {
 
 // ErrorNativeToFunction represents an internal operational failure within a function.
 type ErrorNativeToFunction struct {
-	ErrorGenericConfig
+	ErrorGenericFactory
 }
 
 func (e *ErrorNativeToFunction) Error() string {
@@ -55,7 +55,7 @@ func (e *ErrorNativeToFunction) Error() string {
 
 // ErrorFromFunctionCall represents an error context layer wrapping a downstream failure.
 type ErrorFromFunctionCall struct {
-	ErrorGenericConfig
+	ErrorGenericFactory
 	unwrapped error // Keeps track of the original wrapped error
 }
 
@@ -78,12 +78,12 @@ func (e *ErrorFromFunctionCall) Unwrap() error {
 
 // NewErrorGenericConfig is designed to be called at the beginning of a function when
 // only three elements are known: sourceFile, parentType, and thisFunction.
-func (egc *ErrorGenericConfig) NewErrorGenericConfig(
+func (egc *ErrorGenericFactory) NewErrorGenericConfig(
 	sourceFile string,
 	parentType string,
-	thisFunction string) *ErrorGenericConfig {
+	thisFunction string) *ErrorGenericFactory {
 
-	return &ErrorGenericConfig{
+	return &ErrorGenericFactory{
 		sourceFile:   sourceFile,
 		parentType:   parentType,
 		thisFunction: thisFunction,
@@ -91,7 +91,7 @@ func (egc *ErrorGenericConfig) NewErrorGenericConfig(
 }
 
 // GetErrorInputParameterOutOfRange yields a unique ErrorInputParameterOutOfRange error.
-func (egc *ErrorGenericConfig) GetErrorInputParameterOutOfRange(
+func (egc *ErrorGenericFactory) GetErrorInputParameterOutOfRange(
 	parameter string,
 	path string,
 	fileName string,
@@ -107,11 +107,11 @@ func (egc *ErrorGenericConfig) GetErrorInputParameterOutOfRange(
 	egc.errorMessage = errorMessage
 
 	// Dereferencing (*egc) makes a clean, isolated value copy for this instance
-	return &ErrorInputParameterOutOfRange{ErrorGenericConfig: *egc}
+	return &ErrorInputParameterOutOfRange{ErrorGenericFactory: *egc}
 }
 
 // GetErrorInputParameterNilPointer yields a unique ErrorInputParameterNilPointer error.
-func (egc *ErrorGenericConfig) GetErrorInputParameterNilPointer(
+func (egc *ErrorGenericFactory) GetErrorInputParameterNilPointer(
 	parameter string,
 	path string,
 	fileName string,
@@ -126,11 +126,11 @@ func (egc *ErrorGenericConfig) GetErrorInputParameterNilPointer(
 	egc.errorContext = errorContext
 	egc.errorMessage = errorMessage
 
-	return &ErrorInputParameterNilPointer{ErrorGenericConfig: *egc}
+	return &ErrorInputParameterNilPointer{ErrorGenericFactory: *egc}
 }
 
 // GetErrorNativeToFunction yields a unique ErrorNativeToFunction error.
-func (egc *ErrorGenericConfig) GetErrorNativeToFunction(
+func (egc *ErrorGenericFactory) GetErrorNativeToFunction(
 	parameter string,
 	path string,
 	fileName string,
@@ -145,11 +145,11 @@ func (egc *ErrorGenericConfig) GetErrorNativeToFunction(
 	egc.errorContext = errorContext
 	egc.errorMessage = errorMessage
 
-	return &ErrorNativeToFunction{ErrorGenericConfig: *egc}
+	return &ErrorNativeToFunction{ErrorGenericFactory: *egc}
 }
 
 // GetErrorFromFunctionCall returns an inspectable, wrapped FunctionCallError.
-func (egc *ErrorGenericConfig) GetErrorFromFunctionCall(
+func (egc *ErrorGenericFactory) GetErrorFromFunctionCall(
 	calledFunction string,
 	errorContext string,
 	errorMessage string,
@@ -160,15 +160,15 @@ func (egc *ErrorGenericConfig) GetErrorFromFunctionCall(
 	egc.errorMessage = errorMessage
 
 	return &ErrorFromFunctionCall{
-		ErrorGenericConfig: *egc,
-		unwrapped:          returnedCalledFunctionError,
+		ErrorGenericFactory: *egc,
+		unwrapped:           returnedCalledFunctionError,
 	}
 }
 
 // GetInnerMostError
 //
 // Returns the innermost error from a wrapped error.
-func (egc *ErrorGenericConfig) GetInnerMostError(
+func (egc *ErrorGenericFactory) GetInnerMostError(
 	wrappedErrors error) error {
 
 	if wrappedErrors == nil {
@@ -197,7 +197,7 @@ func (egc *ErrorGenericConfig) GetInnerMostError(
 // ============================================================================
 
 // SetDetailErrorContext updates the detail variables if non-empty arguments are provided.
-func (egc *ErrorGenericConfig) SetDetailErrorContext(
+func (egc *ErrorGenericFactory) SetDetailErrorContext(
 	parameter string,
 	path string,
 	fileName string,
@@ -218,7 +218,7 @@ func (egc *ErrorGenericConfig) SetDetailErrorContext(
 }
 
 // SetErrorMessageElements updates context and messaging details if non-empty arguments are provided.
-func (egc *ErrorGenericConfig) SetErrorMessageElements(
+func (egc *ErrorGenericFactory) SetErrorMessageElements(
 	errorContext string,
 	errorMessage string) {
 
@@ -231,7 +231,7 @@ func (egc *ErrorGenericConfig) SetErrorMessageElements(
 }
 
 // buildErrorStr constructs a string representation of the populated elements.
-func (egc *ErrorGenericConfig) buildErrorStr() string {
+func (egc *ErrorGenericFactory) buildErrorStr() string {
 	errStr := ""
 	foundParametersCount := 0
 

@@ -13,7 +13,7 @@ func (tf *TestSeries04Functions) TestFunc04() {
 
 	fmt.Printf("\nExecuting TestFunc04() ...\n")
 
-	errGenericCfg := new(customerrors.ErrorGenericConfig).NewErrorGenericConfig(
+	errGenericCfg := new(customerrors.ErrorGenericFactory).NewErrorGenericConfig(
 		"TestFuncs_04.go",
 		"TestSeries04Functions",
 		"TestFunc02")
@@ -46,7 +46,7 @@ func (tf *TestSeries04Functions) TestFunc04() {
 
 func (tf *TestSeries04Functions) Series04Func01() error {
 
-	errGenericCfg := new(customerrors.ErrorGenericConfig).NewErrorGenericConfig(
+	errGenericCfg := new(customerrors.ErrorGenericFactory).NewErrorGenericConfig(
 		"TestFuncs_04.go",
 		"TestSeries04Functions",
 		"Series04Func01")
@@ -68,7 +68,7 @@ func (tf *TestSeries04Functions) Series04Func01() error {
 
 func (tf *TestSeries04Functions) Series04Func02() error {
 
-	errGenericCfg := new(customerrors.ErrorGenericConfig).NewErrorGenericConfig(
+	errGenericCfg := new(customerrors.ErrorGenericFactory).NewErrorGenericConfig(
 		"TestFuncs_04.go",
 		"TestSeries04Functions",
 		"Series04Func02")
@@ -90,7 +90,7 @@ func (tf *TestSeries04Functions) Series04Func02() error {
 
 func (tf *TestSeries04Functions) Series04Func03() error {
 
-	errGenericCfg := new(customerrors.ErrorGenericConfig).NewErrorGenericConfig(
+	errGenericCfg := new(customerrors.ErrorGenericFactory).NewErrorGenericConfig(
 		"TestFuncs_04.go",
 		"TestSeries04Functions",
 		"Series04Func03")
@@ -112,7 +112,7 @@ func (tf *TestSeries04Functions) Series04Func03() error {
 
 func (tf *TestSeries04Functions) Series04Func04() error {
 
-	errGenericCfg := new(customerrors.ErrorGenericConfig).NewErrorGenericConfig(
+	errGenericCfg := new(customerrors.ErrorGenericFactory).NewErrorGenericConfig(
 		"TestFuncs_04.go",
 		"TestSeries04Functions",
 		"Series04Func04")

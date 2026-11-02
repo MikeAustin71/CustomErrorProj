@@ -12,7 +12,7 @@ import (
 
 // Series04Func01 calls Series04Func02 and adds context if it fails.
 func Series04Func01() error {
-	factory := (&ErrorGenericConfig{}).NewErrorGenericConfig("series04.go", "Service", "Series04Func01")
+	factory := (&ErrorGenericFactory{}).NewErrorGenericConfig("series04.go", "Service", "Series04Func01")
 
 	err := Series04Func02()
 	if err != nil {
@@ -28,7 +28,7 @@ func Series04Func01() error {
 
 // Series04Func02 calls Series03Func03 and adds context if it fails.
 func Series04Func02() error {
-	factory := (&ErrorGenericConfig{}).NewErrorGenericConfig("series04.go", "Service", "Series04Func02")
+	factory := (&ErrorGenericFactory{}).NewErrorGenericConfig("series04.go", "Service", "Series04Func02")
 
 	err := Series03Func03()
 	if err != nil {
@@ -44,7 +44,7 @@ func Series04Func02() error {
 
 // Series03Func03 calls Series03Func04 and adds context if it fails.
 func Series03Func03() error {
-	factory := (&ErrorGenericConfig{}).NewErrorGenericConfig("series03.go", "Repository", "Series03Func03")
+	factory := (&ErrorGenericFactory{}).NewErrorGenericConfig("series03.go", "Repository", "Series03Func03")
 
 	err := Series03Func04()
 	if err != nil {
@@ -60,7 +60,7 @@ func Series03Func03() error {
 
 // Series03Func04 generates the root ErrorNativeToFunction error.
 func Series03Func04() error {
-	factory := (&ErrorGenericConfig{}).NewErrorGenericConfig("series03.go", "Repository", "Series03Func04")
+	factory := (&ErrorGenericFactory{}).NewErrorGenericConfig("series03.go", "Repository", "Series03Func04")
 
 	// Simulating a calculation or operational bounds error native to this function
 	return factory.GetErrorNativeToFunction(
