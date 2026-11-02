@@ -1,4 +1,4 @@
-package customerrors
+package _02611020042
 
 import (
 	"errors"

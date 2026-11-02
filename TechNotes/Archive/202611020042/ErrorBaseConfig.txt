@@ -1,8 +1,10 @@
-package customerrors
+package _02611020042
 
 import (
 	"errors"
 	"fmt"
+
+	"github.com/MikeAustin71/CustomErrorProj/customerrors"
 )
 
 type ErrorBaseConfig struct {
@@ -34,9 +36,9 @@ func (ebc *ErrorBaseConfig) NewErrorBaseConfig(
 
 func (ebc *ErrorBaseConfig) GetErrorNativeToFunction(
 	errorContext string,
-	errorMessage string) *ErrorNativeToFunction {
+	errorMessage string) *customerrors.ErrorNativeToFunction {
 
-	return &ErrorNativeToFunction{
+	return &customerrors.ErrorNativeToFunction{
 		SourceFile:   ebc.sourceFile,
 		ParentType:   ebc.parentType,
 		ThisFunction: ebc.thisFunction,
@@ -50,7 +52,7 @@ func (ebc *ErrorBaseConfig) GetErrorFromFunctionCall(calledFunction string,
 	errorMessage string,
 	functionReturnErr error) error {
 
-	errFuncCall := &ErrorFunctionCall{
+	errFuncCall := &customerrors.ErrorFunctionCall{
 		SourceFile:     ebc.sourceFile,
 		ParentType:     ebc.parentType,
 		ThisFunction:   ebc.thisFunction,
@@ -69,9 +71,9 @@ func (ebc *ErrorBaseConfig) GetErrorFromFunctionCall(calledFunction string,
 func (ebc *ErrorBaseConfig) GetErrorFunctionCall(
 	calledFunction string,
 	errorContext string,
-	errorMessage string) *ErrorFunctionCall {
+	errorMessage string) *customerrors.ErrorFunctionCall {
 
-	return &ErrorFunctionCall{
+	return &customerrors.ErrorFunctionCall{
 		SourceFile:     ebc.sourceFile,
 		ParentType:     ebc.parentType,
 		ThisFunction:   ebc.thisFunction,
