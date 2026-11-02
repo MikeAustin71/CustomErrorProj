@@ -11,7 +11,7 @@ import (
 
 type ErrorGenericFactory struct {
 	sourceFile         string // Source file containing 'thisFunction'.
-	parentType         string // The 'type' in which 'thisFunction' resides.
+	thisFunctionType   string // The 'type' in which 'thisFunction' (method) resides.
 	thisFunction       string // The current function processing this error.
 	calledFunctionType string // The 'type' of the method identified in
 	// 'calledFunction', below.
@@ -86,9 +86,9 @@ func (egc *ErrorGenericFactory) NewErrorGenericConfig(
 	thisFunction string) *ErrorGenericFactory {
 
 	return &ErrorGenericFactory{
-		sourceFile:   sourceFile,
-		parentType:   parentType,
-		thisFunction: thisFunction,
+		sourceFile:       sourceFile,
+		thisFunctionType: parentType,
+		thisFunction:     thisFunction,
 	}
 }
 
@@ -246,11 +246,12 @@ func (egc *ErrorGenericFactory) buildErrorStr() string {
 		foundParametersCount++
 	}
 
-	if egc.parentType != "" {
+	if egc.thisFunctionType != "" {
 		if foundParametersCount == 0 {
 			errStr = "\n"
 		}
-		errStr += fmt.Sprintf("Parent Type: %s\n", egc.parentType)
+
+		errStr += fmt.Sprintf("This Function Type: %s\n", egc.thisFunctionType)
 		foundParametersCount++
 	}
 
@@ -258,6 +259,7 @@ func (egc *ErrorGenericFactory) buildErrorStr() string {
 		if foundParametersCount == 0 {
 			errStr = "\n"
 		}
+
 		errStr += fmt.Sprintf("This Function: %s\n", egc.thisFunction)
 		foundParametersCount++
 	}
@@ -266,6 +268,7 @@ func (egc *ErrorGenericFactory) buildErrorStr() string {
 		if foundParametersCount == 0 {
 			errStr = "\n"
 		}
+
 		errStr += fmt.Sprintf("Called Function Type: %s\n", egc.calledFunctionType)
 		foundParametersCount++
 	}
@@ -274,6 +277,7 @@ func (egc *ErrorGenericFactory) buildErrorStr() string {
 		if foundParametersCount == 0 {
 			errStr = "\n"
 		}
+
 		errStr += fmt.Sprintf("Called Function: %s\n", egc.calledFunction)
 		foundParametersCount++
 	}
@@ -282,6 +286,7 @@ func (egc *ErrorGenericFactory) buildErrorStr() string {
 		if foundParametersCount == 0 {
 			errStr = "\n"
 		}
+
 		errStr += fmt.Sprintf("Parameter: %s\n", egc.parameter)
 		foundParametersCount++
 	}
@@ -290,6 +295,7 @@ func (egc *ErrorGenericFactory) buildErrorStr() string {
 		if foundParametersCount == 0 {
 			errStr = "\n"
 		}
+
 		errStr += fmt.Sprintf("Path: %s\n", egc.path)
 		foundParametersCount++
 	}
@@ -298,6 +304,7 @@ func (egc *ErrorGenericFactory) buildErrorStr() string {
 		if foundParametersCount == 0 {
 			errStr = "\n"
 		}
+
 		errStr += fmt.Sprintf("FileName: %s\n", egc.fileName)
 		foundParametersCount++
 	}
@@ -306,6 +313,7 @@ func (egc *ErrorGenericFactory) buildErrorStr() string {
 		if foundParametersCount == 0 {
 			errStr = "\n"
 		}
+
 		errStr += fmt.Sprintf("URL: %s\n", egc.url)
 		foundParametersCount++
 	}
@@ -314,6 +322,7 @@ func (egc *ErrorGenericFactory) buildErrorStr() string {
 		if foundParametersCount == 0 {
 			errStr = "\n"
 		}
+
 		errStr += fmt.Sprintf("Error Context: %s\n", egc.errorContext)
 		foundParametersCount++
 	}
@@ -322,6 +331,7 @@ func (egc *ErrorGenericFactory) buildErrorStr() string {
 		if foundParametersCount == 0 {
 			errStr = "\n"
 		}
+
 		errStr += fmt.Sprintf("Error Message: %s\n", egc.errorMessage)
 		foundParametersCount++
 	}
