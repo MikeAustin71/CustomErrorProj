@@ -6,11 +6,13 @@ import (
 	"github.com/MikeAustin71/CustomErrorProj/customerrors"
 )
 
-type TestFunctions struct{}
+type TestSeries01Functions struct{}
 
-func (tf *TestFunctions) TestFunc01() {
+func (tf *TestSeries01Functions) TestFunc01() {
 
-	err := Series01Func01()
+	fmt.Printf("\nExecuting TestFunc01() ...\n")
+
+	err := tf.Series01Func01()
 
 	if err != nil {
 
@@ -24,9 +26,9 @@ func (tf *TestFunctions) TestFunc01() {
 	return
 }
 
-func Series01Func01() error {
+func (tf *TestSeries01Functions) Series01Func01() error {
 
-	callErr := Series01Func02()
+	callErr := tf.Series01Func02()
 
 	if callErr != nil {
 
@@ -50,9 +52,9 @@ func Series01Func01() error {
 	return nil
 }
 
-func Series01Func02() error {
+func (tf *TestSeries01Functions) Series01Func02() error {
 
-	callErr := Series01Func03()
+	callErr := tf.Series01Func03()
 
 	if callErr != nil {
 
@@ -76,9 +78,9 @@ func Series01Func02() error {
 	return nil
 }
 
-func Series01Func03() error {
+func (tf *TestSeries01Functions) Series01Func03() error {
 
-	callErr := Series01Func04()
+	callErr := tf.Series01Func04()
 
 	if callErr != nil {
 
@@ -102,7 +104,7 @@ func Series01Func03() error {
 	return nil
 }
 
-func Series01Func04() error {
+func (tf *TestSeries01Functions) Series01Func04() error {
 
 	err, initErr := new(customerrors.FunctionNativeError).NewFunctionNativeError(
 		"",

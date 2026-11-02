@@ -1,15 +1,12 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/MikeAustin71/CustomErrorProj/AppTest/TestFuncs"
 )
 
 func main() {
 
-	fmt.Printf("Running TestFunc_01()...\n\n")
-	tf := new(TestFuncs.TestFunctions)
+	tf := new(TestFuncs.TestSeries02Functions)
 
-	tf.TestFunc01()
+	tf.TestFunc02()
 }
