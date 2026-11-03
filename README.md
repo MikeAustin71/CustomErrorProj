@@ -15,6 +15,8 @@
 
 
 
+![sittingduck003](D:\GoProjects\MikeAustin71\CustomErrorProj\assets\sittingduck003.png)
+
 # CustomErrorProj: Develop New Custom Error Types
 
 
@@ -31,11 +33,11 @@ troubleshoot issues in Go code.
 
 Based on testing to date, the ***ErrorGenericFactory*** custom error type has been found to be the most effective in providing detailed and informative error messages for various scenarios. It allows developers to create custom error messages with specific error codes and descriptions, making it easier to identify and resolve issues in their Go code.
 
-[caution](assets/underconstruction003.png)
+
 
 ### Be Advised: ***ErrorGenericFactory*** is Still Undergoing Testing
 
-
+![underconstruction003](D:\GoProjects\MikeAustin71\CustomErrorProj\assets\underconstruction003.png)
 
 Testing and evaluation of ***ErrorGenericFactory*** is still ongoing. Progress updates will follow. In the meantime, this is looking very promising. 
 
@@ -104,15 +106,19 @@ func (tf *TestSeries04Functions) TestFunc04() {
 
 	fmt.Printf("\nExecuting TestFunc04() ...\n")
 
+    // NewErrorGenericConfig()
+    // Add identification information for this function
 	errGenericCfg := new(customerrors.ErrorGenericFactory).NewErrorGenericConfig(
 		"TestFuncs_04.go",
 		"TestSeries04Functions",
 		"TestFunc02")
 
-	err := tf.Series04Func01()
+	err := tf.Series04Func01() // First function call in the chain
 
 	if err != nil {
 
+        // Error returned.
+        // Add context information for called function.
 		combinedWrappedErr := errGenericCfg.GetErrorFromFunctionCall(
 			"",
 			"Series04Func01()",
@@ -138,6 +144,8 @@ func (tf *TestSeries04Functions) TestFunc04() {
 
 func (tf *TestSeries04Functions) Series04Func01() error {
 
+    // NewErrorGenericConfig()
+    // Add identification information for this function
 	errGenericCfg := new(customerrors.ErrorGenericFactory).NewErrorGenericConfig(
 		"TestFuncs_04.go",
 		"TestSeries04Functions",
@@ -147,6 +155,8 @@ func (tf *TestSeries04Functions) Series04Func01() error {
 
 	if err != nil {
 
+        // Error returned.
+        // Add context information for called function.
 		return errGenericCfg.GetErrorFromFunctionCall(
 			"",
 			"Series04Func02()",
@@ -161,6 +171,8 @@ func (tf *TestSeries04Functions) Series04Func01() error {
 
 func (tf *TestSeries04Functions) Series04Func02() error {
 
+    // NewErrorGenericConfig()
+    // Add identification information for this function
 	errGenericCfg := new(customerrors.ErrorGenericFactory).NewErrorGenericConfig(
 		"TestFuncs_04.go",
 		"TestSeries04Functions",
@@ -170,6 +182,8 @@ func (tf *TestSeries04Functions) Series04Func02() error {
 
 	if err != nil {
 
+        // Error returned.
+        // Add context information for called function.
 		return errGenericCfg.GetErrorFromFunctionCall(
 			"",
 			"Series04Func03()",
@@ -184,6 +198,8 @@ func (tf *TestSeries04Functions) Series04Func02() error {
 
 func (tf *TestSeries04Functions) Series04Func03() error {
 
+    // NewErrorGenericConfig()
+    // Add identification information for this function
 	errGenericCfg := new(customerrors.ErrorGenericFactory).NewErrorGenericConfig(
 		"TestFuncs_04.go",
 		"TestSeries04Functions",
@@ -193,6 +209,8 @@ func (tf *TestSeries04Functions) Series04Func03() error {
 
 	if err != nil {
 
+        // Error returned.
+        // Add context information for called function.
 		return errGenericCfg.GetErrorFromFunctionCall(
 			"",
 			"Series04Func04()",
@@ -207,11 +225,16 @@ func (tf *TestSeries04Functions) Series04Func03() error {
 
 func (tf *TestSeries04Functions) Series04Func04() error {
 
+    // NewErrorGenericConfig()
+    // Add identification information for this function
 	errGenericCfg := new(customerrors.ErrorGenericFactory).NewErrorGenericConfig(
 		"TestFuncs_04.go",
 		"TestSeries04Functions",
 		"Series04Func04")
 
+        // Error originated in this function
+        // Add context information and error message
+        // for this error. 
 	err := errGenericCfg.GetErrorNativeToFunction(
 		"",
 		"",
@@ -222,7 +245,6 @@ func (tf *TestSeries04Functions) Series04Func04() error {
 
 	return err
 }
-
 ```
 
 
