@@ -31,7 +31,9 @@ troubleshoot issues in Go code.
 
 ## ***ErrorGenericFactory***
 
-Based on testing to date, the ***ErrorGenericFactory*** custom error type has been found to be the most effective in providing detailed and informative error messages for various scenarios. It allows developers to create custom error messages with specific error codes and descriptions, making it easier to identify and resolve issues in their Go code.
+Based on testing conducted to date, the ***ErrorGenericFactory*** custom error type was found to be most effective in providing detailed and informative error messages for various error scenarios. It allows developers to create custom error messages with specific error codes and descriptions, making it easier to identify and resolve issues in their Go code.
+
+***ErrorGenericFactory*** utilizes a bubble up approach. As errors bubble up through the function call tree, the features offered by ***ErrorGenericFactory*** allow developers to add context and trace identification information at every level of the call tree. 
 
 
 
