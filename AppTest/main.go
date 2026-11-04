@@ -4,7 +4,6 @@ import "github.com/MikeAustin71/CustomErrorProj/AppTest/TestFuncs"
 
 func main() {
 
-	//Testfunc05_1()
-	new(TestFuncs.TestSeries06Functions).TestFunc06()
+	new(TestFuncs.TestSeries05Functions).TestFunc05()
 
 }
